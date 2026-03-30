@@ -50,7 +50,7 @@ public final class Autos {
           driveSubsystem.driveArcade(() -> .5, () -> 0). withTimeout(1.5), 
 
 
-          driveSubsystem.turn180Right(),  
+          driveSubsystem.turn90Right(),  
           driveSubsystem.driveArcade(() -> .5, () -> 0). withTimeout(1.5)
           );
 

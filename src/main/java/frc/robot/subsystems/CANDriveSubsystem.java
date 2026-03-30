@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.DriveConstants.*;
 
-//class
 public class CANDriveSubsystem extends SubsystemBase {
       // 1. Initialize the Pigeon (use your actual CAN ID)
     private final Pigeon2 m_gyro = new Pigeon2(13); 
@@ -240,7 +239,8 @@ public class CANDriveSubsystem extends SubsystemBase {
        * @param targetAngle The target angle in degrees (e.g., 90 for right, -90 for left)
        */
       public Command turnToAngle(double targetAngle) {
-        return this.run(() -> {
+        return this.runOnce(() -> zeroHeading()) // Zero the gyro first!
+        .andThen(this.run(() -> {
             double currentAngle = m_gyro.getYaw().getValueAsDouble();
             
             // Determine direction: if target is greater than current, turn right (positive)
