@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.FuelConstants.*;
 
 
+//CanFuelSubystem
 public class CANFuelSubsystem extends SubsystemBase {
   //private final SparkMax feederRoller;
   //private final SparkMax intakeLauncherRoller;
@@ -51,7 +52,7 @@ public class CANFuelSubsystem extends SubsystemBase {
     // create brushed motors for each of the motors on the launcher mechanism
     //intakeLauncherRoller = new SparkMax(INTAKE_LAUNCHER_MOTOR_ID, MotorType.kBrushed);
     //feederRoller = new SparkMax(FEEDER_MOTOR_ID, MotorType.kBrushed);
-
+    
     krakenIntakeLauncherRoller = new TalonFX(INTAKE_LAUNCHER_MOTOR_ID);
     krakenFeederRoller = new TalonFX(FEEDER_MOTOR_ID);
 
