@@ -242,17 +242,13 @@ public class CANDriveSubsystem extends SubsystemBase {
         return this.runOnce(() -> zeroHeading()) // Zero the gyro first!
         .andThen(this.run(() -> {
             double currentAngle = m_gyro.getYaw().getValueAsDouble();
-            
-            // Determine direction: if target is greater than current, turn right (positive)
             if (currentAngle < targetAngle) {
-                drive.arcadeDrive(0, 0.5); // Turn Right
+                drive.arcadeDrive(0, 0.5); 
             } else {
-                drive.arcadeDrive(0, -0.5); // Turn Left
+                drive.arcadeDrive(0, -0.5);
             }
         })
-        // This condition stops the command when the angle is reached (within a 2-degree buffer)
-        .until(() -> Math.abs(m_gyro.getYaw().getValueAsDouble() - targetAngle) < 2.0)
-        // Ensure motors stop when the command ends
+        .until(() -> Math.abs(m_gyro.getYaw().getValueAsDouble() - targetAngle) < 2.0))
         .finallyDo(() -> drive.stopMotor());
       }
 
