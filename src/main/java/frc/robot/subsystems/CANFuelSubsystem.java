@@ -219,6 +219,16 @@ public class CANFuelSubsystem extends SubsystemBase {
     return this.run(() -> launch());
   }
 
+  // A command factory that stops all rollers and finishes immediately
+public Command stopCommand() {
+  return this.runOnce(() -> this.stop());
+}
+
+  // A command factory that will star the intake
+  public Command intakeCommand() {
+    return this.run(() -> intake());
+  }
+
   @Override
   public void periodic() {
 

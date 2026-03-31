@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.CANFuelSubsystem;
 import frc.robot.subsystems.CANDriveSubsystem;
@@ -41,21 +42,24 @@ public final class Autos {
           driveSubsystem.driveArcade(() -> 0, () -> .1).withTimeout(.1),
         // Spin up the launcher for 1 second and then launch balls for 9 seconds, for a
           // total of 10 seconds
-         // ballSubsystem.spinUpCommand().withTimeout(1),
-          //ballSubsystem.launchCommand().withTimeout(9),
+         ballSubsystem.spinUpCommand().withTimeout(1),
+          ballSubsystem.launchCommand().withTimeout(5),
           // Stop running the launcher
-          //ballSubsystem.runOnce(() -> ballSubsystem.stop()),
-
+          ballSubsystem.runOnce(() -> ballSubsystem.stopCommand().withTimeout(.1)),
           driveSubsystem.turn90Left(), 
-          driveSubsystem.driveArcade(() -> .5, () -> 0). withTimeout(1.5), 
 
+          new ParallelDeadlineGroup(
+              // The "Deadline" (The intake stops when this drive sequence is done)
+              new SequentialCommandGroup(
+                  driveSubsystem.driveArcade(() -> 0.5, () -> 0).withTimeout(2.0),
+                  driveSubsystem.turn90Left().withTimeout(1.0),  driveSubsystem.turn90Right(),  
+                  driveSubsystem.driveArcade(() -> .5, () -> 0). withTimeout(1.5)
+              ),
+                // The "Background" command
+                ballSubsystem.intakeCommand()
+              ) //end of ParallelDeadLineGroup
+      );//end of SequentialGroup
 
-          driveSubsystem.turn90Right(),  
-          driveSubsystem.driveArcade(() -> .5, () -> 0). withTimeout(1.5)
-          );
-
-
-    }
+    } //end of centerToBackBalls
   
-
 }
